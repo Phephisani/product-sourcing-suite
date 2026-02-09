@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { useState, useEffect } from "react"
 
 export interface Product {
