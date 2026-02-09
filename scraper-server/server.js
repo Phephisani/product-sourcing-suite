@@ -233,7 +233,8 @@ app.post('/scrape', async (req, res) => {
 
 
 
-app.listen(PORT, () => {
-    console.log(`Scraper Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Scraper Server running on port ${PORT}`);
+    console.log(`Bound to host: 0.0.0.0`);
 });
 
