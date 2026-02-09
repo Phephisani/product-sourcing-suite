@@ -42,6 +42,7 @@ export interface Product {
     promotion?: {
         isOnPromotion: boolean
         dealTags: string[] // e.g., "Daily Deal", "Unboxed Deal"
+        savingsText?: string
     }
 
     // Smart Scout Features
@@ -68,6 +69,14 @@ export interface Product {
     }>
     riskLevel?: "Safe" | "Medium" | "High" | "Gated"
     salesVelocity?: number // Est. monthly sales
+    monthlyRevenue?: number
+    monthlyRevenueText?: string
+    sellerCount?: number
+    fulfillment?: string
+    dimensions?: string
+    weight?: string
+    dateFirstAvailable?: string
+    lqs?: number // Listing Quality Score
 }
 
 export interface Settings {
@@ -75,6 +84,7 @@ export interface Settings {
     refreshInterval: number // milliseconds
     currency: string
     theme: "dark" | "light"
+    isIntelligenceLocked: boolean
 }
 
 export interface Supplier {
@@ -177,7 +187,8 @@ export function useProductStore() {
             userName: "Pheph",
             refreshInterval: 7200000, // 2 hours
             currency: "ZAR",
-            theme: "dark"
+            theme: "dark",
+            isIntelligenceLocked: true
         }
     })
 

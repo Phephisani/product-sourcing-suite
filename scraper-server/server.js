@@ -13,6 +13,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 3001;
 import fs from 'fs';
 import path from 'path';
+import { scrapeTakealot } from './engines/takealot.js';
+import { scrapeAmazon } from './engines/amazon.js';
 
 // Ensure history directory exists
 const HISTORY_DIR = path.join(process.cwd(), 'history');
@@ -182,124 +184,6 @@ app.post('/scrape', async (req, res) => {
 });
 
 
-async function scrapeTakealot(page) {
-    try {
-        const url = await page.url();
-        const plidMatch = url.match(/PLID[0-9]+/);
-
-        if (plidMatch) {
-            const plid = plidMatch[0];
-            const apiUrl = `https://api.takealot.com/rest/v-1-11-0/product-details/${plid}?platform=desktop`;
-            const apiRes = await page.evaluate(async (url) => {
-                try {
-                    const response = await fetch(url);
-                    return await response.json();
-                } catch (e) { return null; }
-            }, apiUrl);
-
-            if (apiRes && !apiRes.error && apiRes.core) {
-                const core = apiRes.core;
-                const gallery = apiRes.gallery || { images: [] };
-                const firstItem = apiRes.buybox?.items?.[0] || {};
-
-                let image = (gallery.images && gallery.images[0]) || '';
-                image = image.replace('{size}', 'full');
-                const price = firstItem.unadjusted_price || firstItem.price || 0;
-
-                return {
-                    title: core.title || '',
-                    price: price,
-                    priceText: price > 0 ? `R ${price}` : 'N/A',
-                    image: image,
-                    rating: apiRes.rating || '0',
-                    reviewCount: apiRes.review_count?.toString() || '0',
-                    category: core.category?.name || 'Unknown',
-                    soldBy: firstItem.seller?.name || 'Takealot',
-                    is1P: (firstItem.seller?.name || '').toLowerCase().includes('takealot'),
-                    bsr: apiRes.sales_rank || 0,
-                    source: 'Takealot',
-                    recommendations: []
-                };
-            }
-        }
-
-        // Final page-based fallback if API fails
-        const data = await page.evaluate(() => {
-            const getPrice = () => {
-                const el = document.querySelector('.buybox-price, .price, [data-testid="price"]');
-                return el ? parseFloat(el.textContent.replace(/[^0-9.]/g, '')) : 0;
-            };
-            return {
-                title: document.querySelector('h1')?.textContent?.trim() || 'Unknown',
-                price: getPrice(),
-                image: document.querySelector('img.gallery-image')?.src || '',
-                rating: '0',
-                reviewCount: '0'
-            };
-        });
-
-        return {
-            ...data,
-            priceText: `R ${data.price}`,
-            source: 'Takealot',
-            recommendations: []
-        };
-    } catch (e) {
-        return { error: "Failed to scrape Takealot", details: e.message };
-    }
-}
-
-// Helper: Extract Keywords
-function extractKeywords(text) {
-    if (!text) return [];
-
-    const stopWords = new Set(['the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'it', 'for', 'with', 'on', 'that', 'this', 'my', 'as', 'was', 'but', 'not', 'are', 'have', 'be', 'very', 'good', 'great', 'product', 'buy', 'one', 'so', 'all', 'can', 'will', 'just', 'at', 'or', 'from', 'an', 'has', 'had', 'would', 'items', 'ordered', 'order', 'delivery', 'time', 'service', 'much', 'really', 'when', 'even', 'received', 'get', 'been', 'about', 'only', 'out', 'other', 'more', 'quality', 'bought', 'price', 'well', 'use', 'money', 'value', 'recommend', 'happy', 'purchase', 'fast', 'excellent', 'it’s', 'don’t', 'definitely']);
-
-    const words = text.toLowerCase()
-        .replace(/[^\w\s]/g, '')
-        .split(/\s+/)
-        .filter(w => w.length > 3 && !stopWords.has(w));
-
-    const frequency = {};
-    words.forEach(w => frequency[w] = (frequency[w] || 0) + 1);
-
-    return Object.entries(frequency)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .map(([word, count]) => ({ word, count }));
-}
-
-async function scrapeAmazon(page) {
-    try {
-        await page.waitForSelector('#productTitle, h1.product-title-word-break', { timeout: 30000 });
-
-        const data = await page.evaluate(() => {
-            const title = document.querySelector('#productTitle, h1.product-title-word-break')?.textContent?.trim() || '';
-            const priceText = document.querySelector('.a-price .a-offscreen, #priceblock_ourprice, #priceblock_dealprice')?.textContent || '0';
-            const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-            const image = document.querySelector('#landingImage, #imgBlkFront')?.src || '';
-            const reviewCount = document.querySelector('#acrCustomerReviewText, #acrCustomerReviewLink')?.textContent || '0';
-            const rating = document.querySelector('.a-icon-alt')?.textContent?.split(' ')[0] || '0';
-
-            const merchantInfo = document.querySelector('#merchant-info, #sellerProfileTriggerId')?.textContent || '';
-            let soldBy = 'Amazon';
-            if (!merchantInfo.toLowerCase().includes('amazon')) {
-                const match = merchantInfo.match(/Sold by\s+([^,]+)/i);
-                if (match) soldBy = match[1].trim();
-            }
-
-            return { title, price, priceText, image, reviewCount, rating, soldBy };
-        });
-
-        return {
-            ...data,
-            is1P: data.soldBy.toLowerCase().includes('amazon'),
-            source: 'Amazon'
-        };
-    } catch (e) {
-        return { error: "Failed to parse Amazon page", details: e.message };
-    }
-}
 
 app.listen(PORT, () => {
     console.log(`Scraper Server running on http://localhost:${PORT}`);

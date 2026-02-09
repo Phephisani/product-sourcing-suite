@@ -7,22 +7,29 @@ import {
     Search,
     Trash2,
     ExternalLink,
+    LayoutGrid,
+    List,
+    Info,
     RefreshCw,
-    TrendingUp,
-    ChevronDown,
-    ChevronUp,
+    Brain,
+    Lock,
     Star,
-    Calculator,
-    MessageSquare
+    ChevronDown,
+    ChevronUp
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DeepIntelligenceOverlay } from '@/components/DeepIntelligenceOverlay';
 
 export function ProductTracker() {
-    const { products, addProduct, deleteProduct, updateProduct } = useProductStore()
+    const { products, addProduct, deleteProduct, updateProduct, settings, updateSettings } = useProductStore()
     const [isAdding, setIsAdding] = useState(false)
     const [loadingId, setLoadingId] = useState<string | null>(null)
     const [expandedId, setExpandedId] = useState<string | null>(null)
     const [searchTerm, setSearchTerm] = useState("")
+    const [platformFilter, setPlatformFilter] = useState<"All" | "Amazon" | "Takealot">("All")
+    const [viewLayout, setViewLayout] = useState<"grid" | "list">("grid")
+    const [inspectingId, setInspectingId] = useState<string | null>(null)
+
     const [newProduct, setNewProduct] = useState({
         name: "",
         url: "",
@@ -62,7 +69,8 @@ export function ProductTracker() {
                 rating: data.rating,
                 recommendations: data.recommendations,
                 estimatedFees: fees,
-                promotion: data.promotion
+                promotion: data.promotion,
+                salesVelocity: data.salesVelocity
             });
             setNewProduct({ name: "", url: "", price: "", source: "Takealot" });
             setIsAdding(false);
@@ -75,6 +83,10 @@ export function ProductTracker() {
     };
 
     const handleFetchDetails = async (productId: string, url: string) => {
+        if (settings.isIntelligenceLocked) {
+            console.log("Intelligence is locked. Skipping sync.");
+            return;
+        }
         setLoadingId(productId)
         try {
             const data = await scrapeProduct(url)
@@ -94,12 +106,22 @@ export function ProductTracker() {
                     recommendations: data.recommendations || undefined,
                     rating: data.rating || undefined,
                     reviewCount: data.reviewCount || undefined,
-                    bsr: data.bsr || undefined,
+                    bsr: typeof data.bsr === 'number' ? data.bsr : undefined,
                     category: data.category || undefined,
                     soldBy: data.soldBy || undefined,
                     is1P: data.is1P,
                     imageCount: data.imageCount || undefined,
-                    bulletPointsCount: data.bulletPointsCount || undefined
+                    bulletPointsCount: data.bulletPointsCount || undefined,
+                    salesVelocity: data.salesVelocity || undefined,
+                    promotion: data.promotion || undefined,
+                    monthlyRevenue: data.monthlyRevenue || undefined,
+                    monthlyRevenueText: data.monthlyRevenueText || undefined,
+                    sellerCount: data.sellerCount || undefined,
+                    fulfillment: data.fulfillment || undefined,
+                    dimensions: data.dimensions || undefined,
+                    weight: data.weight || undefined,
+                    dateFirstAvailable: data.dateFirstAvailable || undefined,
+                    lqs: data.lqs || undefined
                 })
             }
         } catch (error) {
@@ -119,24 +141,72 @@ export function ProductTracker() {
         setIsSyncingAll(false);
     }
 
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.source.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    const filteredProducts = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.source.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesPlatform = platformFilter === "All" || p.source === platformFilter;
+        return matchesSearch && matchesPlatform;
+    })
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Header Actions */}
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className="relative w-full md:w-96">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <input
-                        type="text"
-                        placeholder="Search products..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                    />
+                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <div className="relative w-full md:w-80">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                        />
+                    </div>
+                    {/* Platform Filter */}
+                    <select
+                        value={platformFilter}
+                        onChange={(e) => setPlatformFilter(e.target.value as any)}
+                        className="bg-black/20 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all [&>option]:text-black"
+                    >
+                        <option value="All">All Platforms</option>
+                        <option value="Takealot">Takealot Only</option>
+                        <option value="Amazon">Amazon Only</option>
+                    </select>
+                    <div className="flex bg-black/20 border border-white/10 rounded-xl p-1">
+                        <button
+                            onClick={() => setViewLayout("grid")}
+                            className={cn(
+                                "p-1.5 rounded-lg transition-all",
+                                viewLayout === "grid" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-white"
+                            )}
+                        >
+                            <LayoutGrid className="h-4 w-4" />
+                        </button>
+                        <button
+                            onClick={() => setViewLayout("list")}
+                            className={cn(
+                                "p-1.5 rounded-lg transition-all",
+                                viewLayout === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-white"
+                            )}
+                        >
+                            <List className="h-4 w-4" />
+                        </button>
+                    </div>
+
+                    {/* Intelligence Lock Toggle */}
+                    <button
+                        onClick={() => updateSettings({ isIntelligenceLocked: !settings.isIntelligenceLocked })}
+                        className={cn(
+                            "flex items-center gap-2 px-3 py-2 rounded-xl border transition-all text-[10px] font-black uppercase tracking-widest",
+                            settings.isIntelligenceLocked
+                                ? "bg-rose-500/10 border-rose-500/20 text-rose-500 hover:bg-rose-500/20"
+                                : "bg-emerald-500/10 border-emerald-500/20 text-emerald-500 hover:bg-emerald-500/20"
+                        )}
+                    >
+                        {settings.isIntelligenceLocked ? <Lock className="h-3 w-3" /> : <RefreshCw className="h-3 w-3 animate-spin-slow" />}
+                        {settings.isIntelligenceLocked ? "Intel Locked" : "Intel Active"}
+                    </button>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
                     <button
@@ -225,12 +295,22 @@ export function ProductTracker() {
                 </div>
             )}
 
-            {/* Product Grid */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {/* Product Grid/List */}
+            <div className={cn(
+                viewLayout === "grid"
+                    ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                    : "space-y-4"
+            )}>
                 {filteredProducts.map(product => (
-                    <div key={product.id} className="glass-card group relative rounded-2xl overflow-hidden flex flex-col h-full ring-1 ring-white/10 hover:ring-emerald-500/50 transition-all duration-300">
-                        {/* Status Header */}
-                        {product.riskLevel && (
+                    <div
+                        key={product.id}
+                        className={cn(
+                            "glass-card group relative rounded-2xl overflow-hidden flex ring-1 ring-white/10 hover:ring-emerald-500/50 transition-all duration-300",
+                            viewLayout === "grid" ? "flex-col h-full" : "flex-row h-40"
+                        )}
+                    >
+                        {/* Status Header (Only in Grid) */}
+                        {viewLayout === "grid" && product.riskLevel && (
                             <div className={cn(
                                 "absolute top-0 left-0 right-0 z-10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-center shadow-lg backdrop-blur-md",
                                 product.riskLevel === "Safe" ? "bg-emerald-500/20 text-emerald-400" :
@@ -241,8 +321,19 @@ export function ProductTracker() {
                             </div>
                         )}
 
+                        {/* Deep Intelligence Overlay */}
+                        {inspectingId === product.id && (
+                            <DeepIntelligenceOverlay product={product} onClose={() => setInspectingId(null)} />
+                        )}
+
                         {/* Image Area */}
-                        <div className="aspect-[4/3] bg-white/5 p-4 relative overflow-hidden mt-6">
+                        <div
+                            className={cn(
+                                "bg-white/5 relative overflow-hidden group/img",
+                                viewLayout === "grid" ? "aspect-[4/3] p-4 mt-6" : "w-40 p-4"
+                            )}
+                            onMouseEnter={() => setInspectingId(product.id)}
+                        >
                             <img
                                 src={product.image}
                                 alt={product.name}
@@ -256,27 +347,99 @@ export function ProductTracker() {
                                     {product.source}
                                 </span>
                             </div>
+
+                            {/* Deep Intelligence Badge */}
+                            {(product.sellerCount || product.bsr) ? (
+                                <div
+                                    className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-amber-500/20 backdrop-blur-md px-2 py-1 rounded-md border border-amber-500/30 group-hover:bg-amber-500/40 transition-all cursor-help z-10 shadow-lg shadow-amber-500/10"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setInspectingId(product.id);
+                                    }}
+                                >
+                                    <Brain className="w-3 h-3 text-amber-400 animate-pulse" />
+                                    <span className="text-[10px] font-black text-amber-400 uppercase tracking-tighter">JS INTEL</span>
+                                </div>
+                            ) : (
+                                <div
+                                    className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-zinc-950/60 backdrop-blur-md px-2 py-1 rounded-md border border-white/5 transition-all opacity-60 grayscale cursor-pointer hover:opacity-100 hover:grayscale-0"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFetchDetails(product.id, product.url);
+                                    }}
+                                    title="Click to sync and unlock JS Intel"
+                                >
+                                    <Brain className="w-3 h-3 text-zinc-400 group-hover:text-amber-500/50" />
+                                    <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter group-hover:text-zinc-300">Sync Required</span>
+                                </div>
+                            )}
                         </div>
 
-                        <div className="p-4 md:p-6 flex-1 flex flex-col space-y-4">
-                            <div>
-                                <h3 className="font-semibold text-white leading-tight mb-2 line-clamp-2 min-h-[2.5rem] text-sm md:text-base" title={product.name}>
+                        <div className={cn(
+                            "p-4 flex-1 flex flex-col",
+                            viewLayout === "grid" ? "md:p-6 space-y-4" : "flex-row gap-6 items-center"
+                        )}>
+                            <div className={viewLayout === "grid" ? "" : "flex-1 min-w-0"}>
+                                <h3 className={cn(
+                                    "font-semibold text-white leading-tight mb-2 line-clamp-2 min-h-[2.5rem] text-sm md:text-base",
+                                    viewLayout === "list" && "min-h-0 text-lg"
+                                )} title={product.name}>
                                     {product.name}
                                 </h3>
                                 <div className="flex items-baseline justify-between">
-                                    <span className="text-xl font-bold text-white">
-                                        {product.displayPrice || `R ${product.currentPrice.toFixed(2)}`}
-                                    </span>
+                                    <div className="flex flex-col">
+                                        <span className="text-xl font-bold text-white">
+                                            {product.displayPrice || `R ${product.currentPrice.toFixed(2)}`}
+                                        </span>
+                                        {product.rating && (
+                                            <div className="flex items-center gap-1 text-yellow-400 text-xs mt-1">
+                                                <Star className="w-3 h-3 fill-current" />
+                                                <span>{product.rating}</span>
+                                                <span className="text-muted-foreground">({product.reviewCount})</span>
+                                            </div>
+                                        )}
+                                    </div>
                                     {product.salesVelocity && (
                                         <span className="text-xs text-emerald-400 font-mono">
                                             ~{product.salesVelocity}/mo Sales
                                         </span>
                                     )}
                                 </div>
+                                {product.promotion?.isOnPromotion && (
+                                    <div className="mt-2 flex flex-wrap gap-1">
+                                        {product.promotion.dealTags.map((tag, i) => (
+                                            <span key={i} className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold border border-red-500/20 animate-pulse">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                        {product.promotion.savingsText && (
+                                            <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold border border-emerald-500/20">
+                                                {product.promotion.savingsText}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
-                            {/* Profit Calculator (Mini) */}
-                            {product.fees && (
+                            {/* Stats Area (BSR / Category) */}
+                            <div className={cn(
+                                "flex flex-wrap gap-2",
+                                viewLayout === "list" && "hidden md:flex"
+                            )}>
+                                {product.bsr && (
+                                    <span className="text-[10px] px-2 py-1 bg-white/5 rounded-full text-zinc-400 border border-white/10">
+                                        Rank: #{product.bsr.toLocaleString()}
+                                    </span>
+                                )}
+                                {product.category && (
+                                    <span className="text-[10px] px-2 py-1 bg-white/5 rounded-full text-zinc-400 border border-white/10">
+                                        {product.category}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* Profit Calculator (Mini) - Only in Grid for now to save space in List */}
+                            {viewLayout === "grid" && product.fees && (
                                 <div className="bg-white/5 rounded-lg p-3 space-y-2 border border-white/5">
                                     <div className="flex justify-between text-xs text-muted-foreground">
                                         <span>Est. Fees (FBA+Ref)</span>
@@ -314,63 +477,16 @@ export function ProductTracker() {
                                 </div>
                             )}
 
-                            {/* AI Analysis Preview */}
-                            {product.analysis && (
-                                <div className="space-y-2">
-                                    <div className="flex items-center justify-between">
-                                        <h4 className="text-[10px] font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                                            AI Analysis
-                                        </h4>
-                                        <span className="text-[10px] text-white/50">{product.analysis.sentiment}/100 Score</span>
-                                    </div>
-                                    <div className="space-y-1">
-                                        {product.analysis.pros.slice(0, 1).map((pro, i) => (
-                                            <div key={i} className="flex gap-1.5 items-start text-[10px] text-zinc-400">
-                                                <span className="text-emerald-500 mt-0.5">✓</span>
-                                                {pro}
-                                            </div>
-                                        ))}
-                                        {product.analysis.cons.slice(0, 1).map((con, i) => (
-                                            <div key={i} className="flex gap-1.5 items-start text-[10px] text-zinc-400">
-                                                <span className="text-rose-500 mt-0.5">✕</span>
-                                                {con}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Review Insights */}
-                            {product.reviewKeywords && product.reviewKeywords.length > 0 && (
-                                <div className="space-y-2">
-                                    <div className="flex items-center justify-between">
-                                        <h4 className="text-[10px] font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
-                                            <MessageSquare className="w-3 h-3" />
-                                            Review Insights
-                                        </h4>
-                                    </div>
-                                    <div className="flex flex-wrap gap-1.5">
-                                        {product.reviewKeywords.map((kw, i) => (
-                                            <span
-                                                key={i}
-                                                className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-300 border border-white/5 whitespace-nowrap"
-                                                title={`${kw.count} mentions`}
-                                            >
-                                                {kw.word} <span className="text-zinc-500 ml-0.5 text-[9px]">({kw.count})</span>
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
                             {/* Actions Footer */}
-                            <div className="flex items-center gap-2 mt-auto pt-4 border-t border-white/5">
+                            <div className={cn(
+                                "flex items-center gap-2 mt-auto pt-4 border-t border-white/5",
+                                viewLayout === "list" && "border-none pt-0 mt-0"
+                            )}>
                                 <a
                                     href={product.url}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="flex-1 text-xs font-medium text-muted-foreground hover:text-white flex items-center justify-center gap-1 py-1.5 hover:bg-white/5 rounded-lg transition-colors"
+                                    className="px-3 text-xs font-medium text-muted-foreground hover:text-white flex items-center justify-center gap-1 py-1.5 hover:bg-white/5 rounded-lg transition-colors"
                                 >
                                     Visit <ExternalLink className="h-3 w-3" />
                                 </a>
@@ -384,7 +500,7 @@ export function ProductTracker() {
                                     )}
                                 >
                                     <RefreshCw className={cn("h-4 w-4", loadingId === product.id && "animate-spin")} />
-                                    {product.analysis ? "Re-Analyze" : "Scout"}
+                                    <span className="hidden sm:inline">Sync</span>
                                 </button>
 
                                 <button
@@ -393,147 +509,78 @@ export function ProductTracker() {
                                 >
                                     <Trash2 className="h-4 w-4" />
                                 </button>
-                            </div>
 
-                            {/* Stats Mini-grid (Restored for Takealot/Standard Data) */}
-                            {(!product.analysis && (product.notes || product.rating)) && (
-                                <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-white/5 border-dashed">
-                                    <div className="bg-white/5 rounded-lg p-2 text-center">
-                                        <div className="text-[10px] text-muted-foreground uppercase">Rating</div>
-                                        <div className="text-xs font-medium text-white">
-                                            {product.rating || product.notes?.match(/Rating: ([0-9.]+)/)?.[1] || '-'}
-                                        </div>
-                                    </div>
-                                    <div className="bg-white/5 rounded-lg p-2 text-center">
-                                        <div className="text-[10px] text-muted-foreground uppercase">Reviews</div>
-                                        <div className="text-xs font-medium text-white">
-                                            {product.reviewCount || product.notes?.match(/Reviews: ([0-9]+)/)?.[1] || '-'}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                                {product.recommendations && product.recommendations.length > 0 && (
+                                    <button
+                                        onClick={() => setExpandedId(expandedId === product.id ? null : product.id)}
+                                        className={cn(
+                                            "flex items-center gap-1 px-2 py-1.5 rounded-lg text-[10px] font-medium uppercase transition-colors",
+                                            expandedId === product.id ? "bg-emerald-500 text-white" : "text-muted-foreground hover:text-white hover:bg-white/5"
+                                        )}
+                                    >
+                                        Similar {expandedId === product.id ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                                    </button>
+                                )}
+                            </div>
                         </div>
 
-                        {/* Recommendations Expand (Restored) */}
-                        {product.recommendations && product.recommendations.length > 0 && (
-                            <button
-                                onClick={() => setExpandedId(expandedId === product.id ? null : product.id)}
-                                className="w-full py-2 bg-white/5 hover:bg-white/10 text-[10px] font-medium text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-1 transition-colors border-t border-white/5"
-                            >
-                                Similar Items {expandedId === product.id ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-                            </button>
-                        )}
-
+                        {/* Recommendations Drawer (Grid mode overlay) */}
                         {expandedId === product.id && (
-                            <div className="absolute inset-x-0 bottom-0 bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 p-4 z-20 max-h-[80%] overflow-y-auto animate-in slide-in-from-bottom-10">
-                                <div className="flex items-start justify-between">
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className={`px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider ${product.source === 'Takealot' ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'
-                                                }`}>
-                                                {product.source}
-                                            </span>
-                                            {product.is1P && (
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider bg-purple-500/20 text-purple-400">
-                                                    {product.source === 'Takealot' ? 'Takealot' : 'Amazon'}
-                                                </span>
-                                            )}
-                                            {product.promotion?.isOnPromotion && (
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500 text-white animate-pulse">
-                                                    {product.promotion.dealTags[0] || 'DEAL'}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <h3 className="font-semibold text-white text-lg leading-tight mb-1">{product.name}</h3>
-                                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                                            <span>{product.category || 'Uncategorized'}</span>
-                                            <span>•</span>
-                                            <div className="flex items-center gap-1 text-yellow-400">
-                                                <Star className="w-3 h-3 fill-current" />
-                                                <span>{product.rating || 'N/A'}</span>
-                                                <span className="text-gray-500">({product.reviewCount || 0})</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-2xl font-bold text-white mb-1 font-mono">
-                                            {product.displayPrice}
-                                        </div>
-                                        <div className="flex flex-col items-end gap-1">
-                                            {product.rank && (
-                                                <div className="flex items-center gap-1 text-xs text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full">
-                                                    <TrendingUp className="w-3 h-3" />
-                                                    Rank #{product.rank.toLocaleString()}
-                                                </div>
-                                            )}
-                                            {product.estimatedFees && (
-                                                <div className="flex items-center gap-1 text-[10px] text-muted-foreground" title="Est. Success + Fulfillment Fees">
-                                                    <Calculator className="w-3 h-3" />
-                                                    Fees: R {product.estimatedFees.total.toFixed(2)}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
+                            <div className="absolute inset-0 bg-zinc-950/98 backdrop-blur-xl z-30 p-4 overflow-y-auto animate-in fade-in zoom-in-95">
+                                <div className="flex justify-between items-center mb-4 sticky top-0 bg-zinc-950/50 py-1 backdrop-blur-sm">
+                                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">Similar Products</h4>
+                                    <button onClick={() => setExpandedId(null)} className="p-1 hover:bg-white/10 rounded-full transition-colors">
+                                        <ChevronDown className="h-4 w-4 text-white" />
+                                    </button>
                                 </div>
-                                {product.recommendations && (
-                                    <>
-                                        <div className="flex justify-between items-center mb-3 sticky top-0 bg-transparent">
-                                            <h4 className="text-xs font-bold text-white uppercase">Recommendations</h4>
-                                            <button onClick={() => setExpandedId(null)} className="text-muted-foreground hover:text-white"><ChevronDown className="h-4 w-4" /></button>
-                                        </div>
-                                        <div className="space-y-3">
-                                            {product.recommendations.map((rec, i) => (
-                                                <div key={i} className="flex gap-3 items-center bg-white/5 p-2 rounded-lg group/rec hover:bg-white/10 transition-colors">
-                                                    <img src={rec.image} className="w-10 h-10 object-contain bg-white rounded flex-shrink-0" />
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className="text-xs font-medium text-white line-clamp-1">{rec.title}</p>
-                                                        <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                                                            <span className="text-emerald-400 font-mono">{rec.price}</span>
-                                                            <span>•</span>
-                                                            <span>{rec.reviewCount} Reviews</span>
-                                                            {rec.sellerCount && rec.sellerCount > 1 && (
-                                                                <>
-                                                                    <span>•</span>
-                                                                    <span className="text-amber-400">{rec.sellerCount} Sellers</span>
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => addProduct({
-                                                            name: rec.title,
-                                                            url: rec.url,
-                                                            currentPrice: parseFloat(rec.price.replace(/[^0-9.]/g, '')) || 0,
-                                                            displayPrice: rec.price,
-                                                            source: product.source,
-                                                            image: rec.image
-                                                        })}
-                                                        className="px-2 py-1 bg-primary/20 hover:bg-primary text-primary hover:text-white rounded text-[10px] font-bold transition-all"
-                                                    >
-                                                        ADD
-                                                    </button>
+                                <div className="space-y-3">
+                                    {product.recommendations?.map((rec, i) => (
+                                        <div key={i} className="flex gap-3 items-center bg-white/5 p-2 rounded-lg group/rec hover:bg-emerald-500/10 transition-colors border border-white/5">
+                                            <img src={rec.image} className="w-10 h-10 object-contain bg-white rounded flex-shrink-0" />
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-[11px] font-medium text-white line-clamp-1">{rec.title}</p>
+                                                <div className="flex items-center gap-2 text-[10px]">
+                                                    <span className="text-emerald-400 font-mono">{rec.price}</span>
+                                                    {rec.rating !== '0' && (
+                                                        <span className="text-yellow-400 flex items-center gap-0.5">
+                                                            ★{rec.rating}
+                                                        </span>
+                                                    )}
                                                 </div>
-                                            ))}
+                                            </div>
+                                            <button
+                                                onClick={() => addProduct({
+                                                    name: rec.title,
+                                                    url: rec.url,
+                                                    currentPrice: parseFloat(rec.price.replace(/[^0-9.]/g, '')) || 0,
+                                                    displayPrice: rec.price,
+                                                    source: product.source,
+                                                    image: rec.image,
+                                                    reviewCount: rec.reviewCount,
+                                                    rating: rec.rating
+                                                })}
+                                                className="px-2 py-1 bg-emerald-500/20 hover:bg-emerald-500 text-emerald-400 hover:text-white rounded text-[10px] font-bold transition-all"
+                                            >
+                                                ADD
+                                            </button>
                                         </div>
-                                    </>
-                                )}
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
                 ))}
             </div>
 
-            {
-                filteredProducts.length === 0 && !isAdding && (
-                    <div className="text-center py-20">
-                        <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Search className="h-10 w-10 text-muted-foreground/50" />
-                        </div>
-                        <h3 className="text-lg font-medium text-white mb-1">No products found</h3>
-                        <p className="text-muted-foreground text-sm">Try adjusting your search or add a new product.</p>
+            {filteredProducts.length === 0 && !isAdding && (
+                <div className="text-center py-20">
+                    <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Search className="h-10 w-10 text-muted-foreground/50" />
                     </div>
-                )
-            }
+                    <h3 className="text-lg font-medium text-white mb-1">No products found</h3>
+                    <p className="text-muted-foreground text-sm">Try adjusting your search or add a new product.</p>
+                </div>
+            )}
         </div>
     )
 }

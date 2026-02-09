@@ -11,5 +11,12 @@ yarn-debug.log*
 yarn-error.log*
 scraper-server/browser-data
 scraper-server/history
+scraper-server/test-*.js
+scraper-server/manual_test_*.js
+scraper-server/*.html
+scraper-server/*.png
+scraper-server/*.json
+!scraper-server/package.json
+!scraper-server/package-lock.json
 .cache
 
