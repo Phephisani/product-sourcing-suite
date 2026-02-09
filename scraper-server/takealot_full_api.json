@@ -1,0 +1,897 @@
+{
+  "title": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020",
+  "desktop_href": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+  "core": {
+    "title": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020",
+    "slug": "techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder",
+    "subtitle": "Magnetic sleep flip case , origami",
+    "brand": "TechIt",
+    "brand_url": {
+      "link_data": {
+        "path": "/all?filter=Brand:{brand_slug}",
+        "fields": {
+          "brand_slug": "TechIt"
+        },
+        "action": "search"
+      }
+    },
+    "star_rating": 4.2,
+    "reviews": 56,
+    "formats": [],
+    "authors": [],
+    "links": [
+      {
+        "display_value": "Shop All Cases & Covers",
+        "link_data": {
+          "action": "search",
+          "context": "navigation",
+          "parameters": {
+            "search": {
+              "filters": {
+                "Type": 13,
+                "Category": 27196
+              }
+            }
+          }
+        }
+      }
+    ],
+    "id": 90006504
+  },
+  "badges": {
+    "items": [
+      {
+        "id": "badge-0",
+        "type": "saving",
+        "value": "Up to 33% off"
+      }
+    ]
+  },
+  "buybox": {
+    "plid": 90006504,
+    "variants_call_to_action": "Select an option",
+    "buybox_items_type": "summary",
+    "is_digital": false,
+    "items": [
+      {
+        "is_selected": true,
+        "is_preorder": false,
+        "is_add_to_cart_available": false,
+        "is_add_to_wishlist_available": false,
+        "is_free_shipping_available": false,
+        "multibuy_display": false,
+        "delivery_charges": {},
+        "offer_detail": {},
+        "price": 364,
+        "pretty_price": "From R 364",
+        "add_to_cart_text": "Add to Cart",
+        "loyalty_prices": [
+          {
+            "id": "loyaltyprices-0",
+            "display_text": "eB3,640",
+            "prices": [
+              3640
+            ],
+            "info_text": null,
+            "description": null,
+            "info_mode": null,
+            "image": {
+              "source": "https://static.takealot.com/images/payment/ebucks-logo-@3x.svg",
+              "title": "Ebucks",
+              "alt_text": "Ebucks logo"
+            }
+          },
+          {
+            "id": "loyaltyprices-1",
+            "display_text": "3,640",
+            "prices": [
+              3640
+            ],
+            "info_text": null,
+            "description": null,
+            "info_mode": null,
+            "image": {
+              "source": "https://static.takealot.com/images/payment/discovery-miles-logo.svg",
+              "title": "DiscoveryMiles",
+              "alt_text": "Discovery Miles Logo"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "breadcrumbs": {
+    "items": [
+      {
+        "id": 13,
+        "name": "Computers & Tablets",
+        "slug": "computers",
+        "type": "department"
+      },
+      {
+        "id": 27194,
+        "name": "Tablet & E-Reader Accessories",
+        "slug": "tablet-and-e-reader-accessories-27194",
+        "type": "category"
+      },
+      {
+        "id": 27195,
+        "name": "Tablet Accessories",
+        "slug": "tablet-accessories-27195",
+        "type": "category"
+      },
+      {
+        "id": 27196,
+        "name": "Cases & Covers",
+        "slug": "cases-and-covers-27196",
+        "type": "category"
+      }
+    ]
+  },
+  "gallery": {
+    "images": [
+      "https://media.takealot.com/covers_images/e217d56d03ee4ffbaeb7440bd98e35cf/s-{size}.file",
+      "https://media.takealot.com/covers_images/aca19b7678cf44dab12c8d9fa4e97cba/s-{size}.file",
+      "https://media.takealot.com/covers_images/c71ed693da70484ba143ef99202b6be2/s-{size}.file",
+      "https://media.takealot.com/covers_images/a5bde52e9c5546029aca61708c4c97c5/s-{size}.file",
+      "https://media.takealot.com/covers_images/9357dd17a2fb41caa026b554a5c92a02/s-{size}.file",
+      "https://media.takealot.com/covers_images/d8b73bf604da4a468764dbcb0866625c/s-{size}.file",
+      "https://media.takealot.com/covers_images/280539d52e904bd9bfa7a86ddd585ebd/s-{size}.file",
+      "https://media.takealot.com/covers_images/7f1238478a90499ab78e3d0e37775e61/s-{size}.file",
+      "https://media.takealot.com/covers_images/caae493e94e4497a9f61e03977fa8d16/s-{size}.file",
+      "https://media.takealot.com/covers_images/5b7ca356a0eb4e4cb0426105f4c2e9c0/s-{size}.file",
+      "https://media.takealot.com/covers_images/07d321e671144930b0224e307dc91b9d/s-{size}.file",
+      "https://media.takealot.com/covers_images/d396466b73fd43b68dc2887c42447f23/s-{size}.file",
+      "https://media.takealot.com/covers_images/499ae7985dbb4e0bb39d7b0ec4a1c352/s-{size}.file",
+      "https://media.takealot.com/covers_images/06dfefb80f0f426192db718a0d999f14/s-{size}.file",
+      "https://media.takealot.com/covers_images/98baa41af39a498fa973d100324cc904/s-{size}.file",
+      "https://media.takealot.com/covers_images/3cc3acc095bf48cc99d41498c2b51bec/s-{size}.file"
+    ],
+    "items": [
+      {
+        "image": "https://media.takealot.com/covers_images/e217d56d03ee4ffbaeb7440bd98e35cf/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/aca19b7678cf44dab12c8d9fa4e97cba/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/c71ed693da70484ba143ef99202b6be2/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/a5bde52e9c5546029aca61708c4c97c5/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/9357dd17a2fb41caa026b554a5c92a02/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/d8b73bf604da4a468764dbcb0866625c/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/280539d52e904bd9bfa7a86ddd585ebd/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/7f1238478a90499ab78e3d0e37775e61/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/caae493e94e4497a9f61e03977fa8d16/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/5b7ca356a0eb4e4cb0426105f4c2e9c0/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/07d321e671144930b0224e307dc91b9d/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/d396466b73fd43b68dc2887c42447f23/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/499ae7985dbb4e0bb39d7b0ec4a1c352/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/06dfefb80f0f426192db718a0d999f14/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/98baa41af39a498fa973d100324cc904/s-{size}.file",
+        "type": "image"
+      },
+      {
+        "image": "https://media.takealot.com/covers_images/3cc3acc095bf48cc99d41498c2b51bec/s-{size}.file",
+        "type": "image"
+      }
+    ]
+  },
+  "product_information": {
+    "categories": {
+      "id": "categories-0",
+      "display_name": "Categories",
+      "source": "productline-categories",
+      "content_type": "text/markdown",
+      "displayable_text": "- [Computers & Tablets](/computers) / [Tablet & E-Reader Accessories](/computers/tablet-and-e-reader-accessories-27194) / [Tablet Accessories](/computers/tablet-accessories-27195) / [Cases & Covers](/computers/cases-and-covers-27196)\n- [Computers & Tablets](/computers) / [Accessories](/computers/accessories-26394) / [Cases & Covers](/computers/cases-and-covers-26402)"
+    },
+    "items": [
+      {
+        "id": "categories-0",
+        "display_name": "Categories",
+        "source": "productline-categories",
+        "content_type": "text/markdown",
+        "displayable_text": "- [Computers & Tablets](/computers) / [Tablet & E-Reader Accessories](/computers/tablet-and-e-reader-accessories-27194) / [Tablet Accessories](/computers/tablet-accessories-27195) / [Cases & Covers](/computers/cases-and-covers-27196)\n- [Computers & Tablets](/computers) / [Accessories](/computers/accessories-26394) / [Cases & Covers](/computers/cases-and-covers-26402)"
+      },
+      {
+        "id": "attributes-0",
+        "display_name": "Brand",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "[TechIt](/all?filter=Brand:TechIt)",
+        "item_type": "brand"
+      },
+      {
+        "id": "attributes-1",
+        "display_name": "Warranty",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Limited \\(6 months\\)",
+        "item_type": "warranty"
+      },
+      {
+        "id": "attributes-2",
+        "display_name": "Materials",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Plastic",
+        "item_type": "materials"
+      },
+      {
+        "id": "attributes-3",
+        "display_name": "Is Non Slip",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Yes",
+        "item_type": "is_non_slip"
+      },
+      {
+        "id": "attributes-4",
+        "display_name": "Screen Size",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "10'",
+        "item_type": "screen_size"
+      },
+      {
+        "id": "attributes-5",
+        "display_name": "Is Ergonomic",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Yes",
+        "item_type": "is_ergonomic"
+      },
+      {
+        "id": "attributes-6",
+        "display_name": "Case & Cover Type",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Flip Cover",
+        "item_type": "case_cover_type"
+      },
+      {
+        "id": "attributes-7",
+        "display_name": "What's in the box",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "1 x iPad air 10.9 flip case ",
+        "item_type": "whats_in_the_box"
+      },
+      {
+        "id": "attributes-8",
+        "display_name": "Merchandising Tags",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "- [New to Takealot](/all?filter=MerchandisingTags:New+to+Takealot)",
+        "item_type": "merchandising_tags"
+      },
+      {
+        "id": "attributes-9",
+        "display_name": "Cases & Covers Special Features",
+        "source": "product-line-attribute-service",
+        "content_type": "text/markdown",
+        "displayable_text": "Scratch Resistant",
+        "item_type": "cases_covers_special_features"
+      }
+    ],
+    "tab_title": "Product Information"
+  },
+  "description": {
+    "tab_title": "Description",
+    "html": "<p>Features:</p>\n\n<p>See-through back to show apple logo and design </p>\n\n<p>Automatically wakes your iPad when opened and puts it to sleep when closed.</p>\n\n<p>Easily fold into different positions to create a stand for reading, viewing, typing, or making -FaceTime calls.</p>\n\n<p>Easy to remove, so you can snap it on and off whenever you want.</p>\n\n<p>Built-in Apple Pencil holder slot allows you to grab your Apple Pencil effortlessly. the placement of the pencil holder is perfect as it allows you to charge apple pencil while safely in holder.</p>\n\n<p>Simple, comfortable and easy to carry.</p>\n\n<p>Adequately protects device from the normal scratches, dirt, wear and tear.</p>\n\n<p>Buttons and ports are easy to access.</p>\n\n<p>Made of TPU + PU leather for durable use.</p>\n\n<p>Origami design lets you have multiple viewing angles horizontal or landscape </p>\n\n<p>iPad and Apple Pencil NOT Included. Flip Cover Only.*</p>\n\n<p>Compatible Devices :</p>\n\n<p>iPad air 10.9 inch 4th generation 2020, 2021 models</p><p>What's in the box<br />\n1 x iPad air 10.9 flip case </p>\n"
+  },
+  "bullet_point_attributes": {
+    "items": [
+      {
+        "description": "## Hassle-Free Exchanges & Returns for 30 Days\n\n### **Returns**\n\nIf you are not completely satisfied, simply return the items to us in their original condition and packaging within 30 days of receipt and we will issue a credit which can be used to place a new order.\n\n### Exchanges  (Fashion, sportswear and shoes only)\n\nThe item must be unworn and unused (other than trials) with the original tags still attached. Packaging should be returned in an undamaged condition with the item.\n\n### When does this policy not apply?\n\nIf the item is:\n- older than 30 days\n- unsealed, used or missing any accessories\n- a digital product such as an eBook, electronic voucher, gaming code or other digital downloads;\n- an audio or video recording or computer software that has been unsealed;\n- a newspaper, periodical or magazine;\n- a foodstuff, beverage, or other product intended for everyday consumption;\n- a nursing or maternity product that has been unsealed, including (but not limited to) breast pumps, bottles, formula, maternity underwear, nappies and wipes;\n- a beauty product or fragrance which has been used;\n- a product which has been personalised or made to your specifications.\n\n\nFind out more about [Return Policy](https://terms-and-policies.takealot.com/).\n",
+        "positive": true,
+        "text": "Hassle-Free Exchanges & Returns for 30 Days.",
+        "info_mode": "long",
+        "type": "hassle_free_exchanges_and_returns",
+        "id": "bullet-point-0"
+      },
+      {
+        "description": "Limited warranty, with certain exclusions, as defined by the manufacturer. Please consult the manufacturer for further details.",
+        "positive": true,
+        "text": "6-Month Limited Warranty.",
+        "info_mode": "short",
+        "type": "warranty",
+        "id": "bullet-point-1"
+      }
+    ]
+  },
+  "reviews": {
+    "count": 56,
+    "href": "https://api.takealot.com/rest/v-1-13-0/product-reviews/plid/90006504",
+    "tab_title": "Reviews (56)",
+    "link_data": {
+      "path": "/rest/{api_version}/product-reviews/plid/{plid}",
+      "fields": {
+        "api_version": "v-1-13-0",
+        "plid": "90006504"
+      }
+    },
+    "star_rating": 4.2,
+    "distribution": {
+      "num_1_star_ratings": 3,
+      "num_2_star_ratings": 4,
+      "num_3_star_ratings": 3,
+      "num_4_star_ratings": 12,
+      "num_5_star_ratings": 34
+    }
+  },
+  "meta": {
+    "identifier": "PLID90006504",
+    "href": "https://api.takealot.com/rest/v-1-13-0/product-details/PLID90006504?platform=desktop",
+    "link_data": {
+      "path": "/rest/{api_version}/product-details/{plid}?platform={platform}",
+      "fields": {
+        "api_version": "v-1-13-0",
+        "plid": "PLID90006504",
+        "platform": "desktop"
+      }
+    },
+    "date_retrieved": "2026-01-20T16:21:58.620557",
+    "display": true,
+    "type": "ProductDetails"
+  },
+  "top_navigation": {
+    "items": [
+      {
+        "id": "topnav-50",
+        "text": "Computers",
+        "href": "/computers",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      },
+      {
+        "id": "topnav-51",
+        "text": "Laptops",
+        "href": "/computers/laptops",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      },
+      {
+        "id": "topnav-52",
+        "text": "Accessories",
+        "href": "/computers/accessories",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      },
+      {
+        "id": "topnav-53",
+        "text": "Tablets & Kindles",
+        "href": "/computers/tablets_and_kindles",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      },
+      {
+        "id": "topnav-54",
+        "text": "Networking",
+        "href": "/computers/networking-26387",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      },
+      {
+        "id": "topnav-55",
+        "text": "Data Storage",
+        "href": "/computers/external_storage",
+        "foreground": "#333333",
+        "background": "#ededed",
+        "font_styling": [
+          "id",
+          "text",
+          "link",
+          "text_colour",
+          "background_colour"
+        ]
+      }
+    ]
+  },
+  "variants": {
+    "selectors": [
+      {
+        "selector_type": "colour_variant",
+        "ui_style": "colour-variant",
+        "action": "colour",
+        "title": "Colour",
+        "call_to_action": "Select a colour",
+        "options": [
+          {
+            "is_enabled": true,
+            "is_selected": false,
+            "desktop_href": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504?colour_variant=Black",
+            "href": "https://api.takealot.com/rest/v-1-13-0/product-details/PLID90006504?platform=desktop&colour_variant=Black",
+            "link_data": {
+              "path": "/rest/{api_version}/product-details/{plid}?platform={platform}&colour_variant={colour_variant}",
+              "fields": {
+                "api_version": "v-1-13-0",
+                "plid": "PLID90006504",
+                "platform": "desktop",
+                "colour_variant": "Black"
+              }
+            },
+            "value": {
+              "name": "Black",
+              "value": "Black",
+              "type": "colour_variant",
+              "sort_order": null
+            },
+            "sort_order": -1,
+            "image": [
+              "https://media.takealot.com/covers_images/e217d56d03ee4ffbaeb7440bd98e35cf/s-{size}.file"
+            ],
+            "id": "colour_variant-Black"
+          },
+          {
+            "is_enabled": false,
+            "is_selected": false,
+            "desktop_href": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504?colour_variant=Green",
+            "href": "https://api.takealot.com/rest/v-1-13-0/product-details/PLID90006504?platform=desktop&colour_variant=Green",
+            "link_data": {
+              "path": "/rest/{api_version}/product-details/{plid}?platform={platform}&colour_variant={colour_variant}",
+              "fields": {
+                "api_version": "v-1-13-0",
+                "plid": "PLID90006504",
+                "platform": "desktop",
+                "colour_variant": "Green"
+              }
+            },
+            "value": {
+              "name": "Green",
+              "value": "Green",
+              "type": "colour_variant",
+              "sort_order": null
+            },
+            "sort_order": -1,
+            "image": [
+              "https://media.takealot.com/covers_images/d8b73bf604da4a468764dbcb0866625c/s-{size}.file"
+            ],
+            "id": "colour_variant-Green"
+          },
+          {
+            "is_enabled": true,
+            "is_selected": false,
+            "desktop_href": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504?colour_variant=Pink",
+            "href": "https://api.takealot.com/rest/v-1-13-0/product-details/PLID90006504?platform=desktop&colour_variant=Pink",
+            "link_data": {
+              "path": "/rest/{api_version}/product-details/{plid}?platform={platform}&colour_variant={colour_variant}",
+              "fields": {
+                "api_version": "v-1-13-0",
+                "plid": "PLID90006504",
+                "platform": "desktop",
+                "colour_variant": "Pink"
+              }
+            },
+            "value": {
+              "name": "Pink",
+              "value": "Pink",
+              "type": "colour_variant",
+              "sort_order": null
+            },
+            "sort_order": -1,
+            "image": [
+              "https://media.takealot.com/covers_images/5b7ca356a0eb4e4cb0426105f4c2e9c0/s-{size}.file"
+            ],
+            "id": "colour_variant-Pink"
+          },
+          {
+            "is_enabled": true,
+            "is_selected": false,
+            "desktop_href": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504?colour_variant=navy",
+            "href": "https://api.takealot.com/rest/v-1-13-0/product-details/PLID90006504?platform=desktop&colour_variant=navy",
+            "link_data": {
+              "path": "/rest/{api_version}/product-details/{plid}?platform={platform}&colour_variant={colour_variant}",
+              "fields": {
+                "api_version": "v-1-13-0",
+                "plid": "PLID90006504",
+                "platform": "desktop",
+                "colour_variant": "navy"
+              }
+            },
+            "value": {
+              "name": "navy",
+              "value": "navy",
+              "type": "colour_variant",
+              "sort_order": null
+            },
+            "sort_order": -1,
+            "image": [
+              "https://media.takealot.com/covers_images/06dfefb80f0f426192db718a0d999f14/s-{size}.file"
+            ],
+            "id": "colour_variant-navy"
+          }
+        ]
+      }
+    ],
+    "sizing_chart": null,
+    "measurement_guide": null
+  },
+  "exchanges_and_returns": {
+    "tab_title": "Exchanges and Returns",
+    "copy": "### Free exchanges & returns for 30 days\n\nWrong size? Not quite what you wanted? You can exchange or return your purchase up to 30 days from the day you received it.\n\n1. Log your exchange or return request via your [Takealot Account profile](https://secure.takealot.com/account/).\n2. Prepare your return parcel.\n3. Wait for courier collection or drop off the parcel yourself.\n4. If approved, your account will be credited.\n\n[Find out more](https://www.takealot.com/help/fashion-exchanges-returns)\n"
+  },
+  "seo": {
+    "title": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020 | Shop Today. Get it Tomorrow! | takealot.com",
+    "description": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020. Hassle-Free Exchanges & Returns for 30 Days. 6-Month Limited Warranty. Many ways to pay. Shop anything you can imagine!",
+    "canonical": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+    "alternate": {
+      "handheld": "https://m.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+      "android": "android-app://fi.android.takealot/app/takealot.com/product/PLID90006504"
+    },
+    "x_robots_tag": "index, follow, archive, max-image-preview: large",
+    "last_modified": "Thu, 15 Jan 2026 00:21:35 GMT"
+  },
+  "pdp_ad_slots": {
+    "ad_slots": [
+      {
+        "targeting": {
+          "category": [
+            "26394",
+            "26402",
+            "27194",
+            "27195",
+            "27196"
+          ],
+          "brand": "techit",
+          "environment": "production",
+          "platform": "desktop",
+          "plid": "90006504",
+          "type": [
+            "13"
+          ],
+          "price": "Under 1000"
+        },
+        "id": "pdp_slot_1",
+        "supported_sizes": [
+          {
+            "viewport": [
+              1259,
+              0
+            ],
+            "sizes": [
+              [
+                300,
+                50
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              1024,
+              0
+            ],
+            "sizes": [
+              [
+                970,
+                90
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              768,
+              0
+            ],
+            "sizes": [
+              [
+                728,
+                90
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              490,
+              0
+            ],
+            "sizes": [
+              [
+                468,
+                60
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              300,
+              0
+            ],
+            "sizes": [
+              [
+                300,
+                50
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              0,
+              0
+            ],
+            "sizes": []
+          }
+        ],
+        "type": "GoogleAdSlot",
+        "div_id": "div-gpt-ad-325679554203798845260718003691659435318",
+        "ad_unit": "/21681910165/pdp_slot_1"
+      },
+      {
+        "targeting": {
+          "category": [
+            "26394",
+            "26402",
+            "27194",
+            "27195",
+            "27196"
+          ],
+          "brand": "techit",
+          "environment": "production",
+          "platform": "desktop",
+          "plid": "90006504",
+          "type": [
+            "13"
+          ],
+          "price": "Under 1000"
+        },
+        "id": "pdp_slot_2",
+        "supported_sizes": [
+          {
+            "viewport": [
+              1259,
+              0
+            ],
+            "sizes": [
+              [
+                300,
+                250
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              1024,
+              0
+            ],
+            "sizes": [
+              [
+                970,
+                90
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              768,
+              0
+            ],
+            "sizes": [
+              [
+                728,
+                90
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              490,
+              0
+            ],
+            "sizes": [
+              [
+                468,
+                60
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              300,
+              0
+            ],
+            "sizes": [
+              [
+                300,
+                250
+              ]
+            ]
+          },
+          {
+            "viewport": [
+              0,
+              0
+            ],
+            "sizes": []
+          }
+        ],
+        "type": "GoogleAdSlot",
+        "div_id": "div-gpt-ad-37976004206705840380942542704003360156",
+        "ad_unit": "/21681910165/pdp_slot_2"
+      }
+    ]
+  },
+  "sharing": {
+    "url": "https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+    "enabled": [
+      "facebook",
+      "twitter",
+      "pinterest",
+      "email",
+      "whatsapp"
+    ],
+    "copy": {
+      "body": {
+        "email": "Check this out on takealot: TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020%0Ahttps://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+        "twitter": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020 available to buy online at @TAKEALOT We offer fast, reliable delivery to your door.",
+        "facebook": "I love this product on takealot.com: TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020 https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+        "whatsapp": "Check this out on takealot.com, TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020 https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504",
+        "pinterest": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020 | Buy Online in South Africa | https://www.takealot.com/techit-ipad-air-10-9-4th-gen-flip-cover-case-apple-pencil-holder/PLID90006504"
+      },
+      "subject": {
+        "email": "Check this out on takealot: TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020"
+      }
+    }
+  },
+  "data_layer": {
+    "name": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020",
+    "sku": null,
+    "tsin": null,
+    "event": "product",
+    "quantity": 1,
+    "categoryname": [
+      "Tablet & E-Reader Accessories",
+      "Tablet Accessories",
+      "Cases & Covers"
+    ],
+    "totalPrice": 400,
+    "productlineSku": "PLID90006504",
+    "departmentname": "Computers & Tablets",
+    "departmentid": 13,
+    "pageType": "product",
+    "categoryid": [
+      27194,
+      27195,
+      27196
+    ],
+    "prodid": "PLID90006504"
+  },
+  "event_data": {
+    "documents": {
+      "product": {
+        "product_line_id": 90006504,
+        "in_stock": false,
+        "market_place_listing": false,
+        "purchase_price": 364
+      }
+    }
+  },
+  "flixmedia": {
+    "tab_title": "Featured Content",
+    "distributor": "6320",
+    "brand": "TechIt",
+    "mpn": null,
+    "ean": null,
+    "language": "za",
+    "fallback_language": "za",
+    "featured_content_description": "Explore detailed product features and stunning image galleries",
+    "featured_content_button": "Explore"
+  },
+  "enhanced_ecommerce_detail": {
+    "ecommerce": {
+      "detail": {
+        "products": [
+          {
+            "id": "PLID90006504",
+            "name": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020",
+            "category": "Computers & Tablets/Tablet & E-Reader Accessories/Tablet Accessories/Cases & Covers",
+            "price": 400,
+            "quantity": 1,
+            "position": 0,
+            "brand": "TechIt",
+            "variant": null,
+            "dimension1": null,
+            "dimension2": null
+          }
+        ],
+        "actionField": {
+          "list": "product"
+        }
+      }
+    },
+    "event": "eec.detail"
+  },
+  "enhanced_ecommerce_add_to_cart": {
+    "ecommerce": {
+      "add": {
+        "products": [
+          {
+            "id": "PLID90006504",
+            "name": "TechIt iPad Air 10.9\" 4th Gen Flip Cover/Case & Apple Pencil holder - 2020",
+            "category": "Computers & Tablets/Tablet & E-Reader Accessories/Tablet Accessories/Cases & Covers",
+            "price": 400,
+            "quantity": 1,
+            "position": 0,
+            "brand": "TechIt",
+            "variant": null,
+            "dimension1": null,
+            "dimension2": null
+          }
+        ]
+      },
+      "currencyCode": "ZAR"
+    },
+    "event": "addToCart"
+  }
+}

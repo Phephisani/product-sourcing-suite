@@ -1,0 +1,31 @@
+services:
+  # Backend Service (Scraper)
+  - type: web
+    name: scraper-server
+    runtime: node
+    region: oregon
+    plan: free
+    # Go into directory and install dependencies
+    buildCommand: cd scraper-server && npm install
+    # Go into directory and start server
+    startCommand: cd scraper-server && node server.js
+    envVars:
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/project/src/scraper-server/.cache
+      - key: NODE_VERSION
+        value: 18
+
+  # Frontend Service (Dashboard)
+  - type: static
+    name: market-dashboard
+    runtime: static
+    # Go into directory, install, and build
+    buildCommand: cd market-dashboard && npm install && npm run build
+    # Directory where built files are located
+    publishDir: market-dashboard/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: scraper-server
+          property: url

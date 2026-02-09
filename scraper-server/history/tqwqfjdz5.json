@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-01-30T12:06:33.170Z",
+    "price": 699,
+    "bsr": 0,
+    "reviewCount": 34,
+    "rating": 4.8
+  },
+  {
+    "date": "2026-02-01T21:10:53.614Z",
+    "price": 699,
+    "bsr": 0,
+    "reviewCount": 0,
+    "rating": 0
+  },
+  {
+    "date": "2026-02-01T23:14:04.445Z",
+    "price": 699,
+    "bsr": 0,
+    "reviewCount": 0,
+    "rating": 0
+  }
+]
