@@ -210,9 +210,12 @@ export function useProductStore() {
     // Cloud Sync State
     const [isSyncing, setIsSyncing] = useState(false)
     const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     // Helper: Sync to Server
     const syncToServer = async (collection: string, data: any) => {
+        if (!isLoaded) return // Don't sync until we've finished initial load
+
         try {
             setIsSyncing(true)
             await fetch(`${API_URL}/api/data/${collection}`, {
@@ -251,13 +254,20 @@ export function useProductStore() {
                             const localData = JSON.parse(localSaved)
                             if (localData && (Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0)) {
                                 console.log(`Migrating ${coll} to server...`)
-                                await syncToServer(coll, localData)
+                                // We call fetch directly here because isLoaded is still false
+                                await fetch(`${API_URL}/api/data/${coll}`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(localData)
+                                })
                             }
                         }
                     }
                 }
+                setIsLoaded(true) // Mark as loaded after all collections are processed
             } catch (error) {
                 console.error("Initial load/sync error:", error)
+                setIsLoaded(true) // Set to true even on error so user can still work
             }
         }
         loadAllData()
