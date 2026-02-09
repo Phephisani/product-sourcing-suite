@@ -19,7 +19,6 @@ services:
   - type: web
     name: market-dashboard
     runtime: static
-    plan: free
     # Go into directory, install, and build
     buildCommand: cd market-dashboard && npm install && npm run build
     # Directory where built files are located
