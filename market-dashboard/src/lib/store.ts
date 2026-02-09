@@ -235,40 +235,47 @@ export function useProductStore() {
     // Initial Load & Migration
     useEffect(() => {
         const loadAllData = async () => {
+            console.log(`[Sync] Connecting to: ${API_URL}`);
             try {
                 const collections = ['products', 'settings', 'suppliers', 'sourcingCart']
 
                 for (const coll of collections) {
+                    console.log(`[Sync] Checking ${coll}...`);
                     const res = await fetch(`${API_URL}/api/data/${coll}`)
                     const serverData = await res.json()
 
                     if (serverData && (Array.isArray(serverData) ? serverData.length > 0 : Object.keys(serverData).length > 0)) {
-                        // Server has data, use it (Update states)
+                        console.log(`[Sync] Found data on server for ${coll}.`);
                         if (coll === 'products') setProducts(serverData)
                         if (coll === 'settings') setSettings(serverData)
                         if (coll === 'suppliers') setSuppliers(serverData)
                         if (coll === 'sourcingCart') setSourcingCart(serverData)
                     } else {
-                        // Server is empty, if we have local data, migrate it to the server
+                        console.log(`[Sync] Server ${coll} is empty. Checking local storage...`);
                         const localSaved = localStorage.getItem(coll)
                         if (localSaved) {
                             const localData = JSON.parse(localSaved)
                             if (localData && (Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0)) {
-                                console.log(`Migrating ${coll} to server...`)
-                                // We call fetch directly here because isLoaded is still false
-                                await fetch(`${API_URL}/api/data/${coll}`, {
+                                console.warn(`[Sync] MIGRATING ${coll} TO CLOUD...`);
+                                const pushRes = await fetch(`${API_URL}/api/data/${coll}`, {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(localData)
                                 })
+                                if (pushRes.ok) {
+                                    console.log(`[Sync] SUCCESS: ${coll} migrated to cloud.`);
+                                } else {
+                                    console.error(`[Sync] FAILED to migrate ${coll}. Status: ${pushRes.status}`);
+                                }
                             }
                         }
                     }
                 }
-                setIsLoaded(true) // Mark as loaded after all collections are processed
+                setIsLoaded(true)
+                console.log(`[Sync] Full synchronization complete.`);
             } catch (error) {
-                console.error("Initial load/sync error:", error)
-                setIsLoaded(true) // Set to true even on error so user can still work
+                console.error("[Sync] ERROR during initial load:", error)
+                setIsLoaded(true)
             }
         }
         loadAllData()
@@ -387,6 +394,7 @@ export function useProductStore() {
         updateCartItem,
         removeFromCart,
         isSyncing,
-        lastSyncTime
+        lastSyncTime,
+        apiUrl: API_URL
     }
 }

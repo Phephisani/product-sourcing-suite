@@ -1,9 +1,9 @@
 import { useProductStore } from "@/lib/store"
-import { Save, Trash2, Download, Upload } from "lucide-react"
+import { Save, Trash2, Download, Upload, RefreshCw } from "lucide-react"
 import { useState } from "react"
 
 export function Settings() {
-    const { settings, updateSettings, clearAllData, products, importData } = useProductStore()
+    const { settings, updateSettings, clearAllData, products, importData, apiUrl } = useProductStore()
     const [jsonInput, setJsonInput] = useState("")
 
     const handleExport = () => {
@@ -37,7 +37,13 @@ export function Settings() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <div>
                 <h2 className="text-3xl font-bold tracking-tight text-white">Settings</h2>
-                <p className="text-muted-foreground mt-2">Manage your preferences and data.</p>
+                <div className="flex items-center gap-2 mt-2">
+                    <p className="text-muted-foreground">Manage your preferences and data.</p>
+                    <div className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${apiUrl.includes('render') ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                        {apiUrl.includes('render') ? 'Cloud Mode' : 'Local Mode'}
+                    </div>
+                </div>
+                <p className="text-[10px] text-muted-foreground/50 mt-1 font-mono">API: {apiUrl}</p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-2">
@@ -102,13 +108,21 @@ export function Settings() {
                                     placeholder="Paste JSON content here to import..."
                                     className="w-full h-20 bg-black/20 border border-white/10 rounded-lg p-2 text-xs text-mono text-white/70 focus:outline-none mb-2"
                                 />
-                                <button
-                                    onClick={handleImport}
-                                    disabled={!jsonInput}
-                                    className="w-full px-4 py-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-                                >
-                                    <Upload className="w-4 h-4" /> Import Data
-                                </button>
+                                <div className="space-y-2">
+                                    <button
+                                        onClick={handleImport}
+                                        disabled={!jsonInput}
+                                        className="w-full px-4 py-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                                    >
+                                        <Upload className="w-4 h-4" /> Import Data
+                                    </button>
+                                    <button
+                                        onClick={() => window.location.reload()}
+                                        className="w-full px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+                                    >
+                                        <RefreshCw className="w-4 h-4" /> Force Cloud Sync (Refresh)
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
