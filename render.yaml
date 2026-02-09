@@ -16,9 +16,11 @@ services:
         value: 18
 
   # Frontend Service (Dashboard)
-  - type: static
+  - type: web
     name: market-dashboard
+    runtime: static
     region: oregon
+    plan: free
     # Go into directory, install, and build
     buildCommand: cd market-dashboard && npm install && npm run build
     # Directory where built files are located
