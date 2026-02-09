@@ -242,9 +242,9 @@ export function useProductStore() {
                 for (const coll of collections) {
                     console.log(`[Sync] Checking ${coll}...`);
 
-                    // Add a timeout to the fetch call
+                    // Add a patient timeout for Render cold starts
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+                    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
 
                     try {
                         const res = await fetch(`${API_URL}/api/data/${coll}`, { signal: controller.signal });
@@ -264,7 +264,7 @@ export function useProductStore() {
                             if (localSaved) {
                                 const localData = JSON.parse(localSaved)
                                 if (localData && (Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0)) {
-                                    console.warn(`[Sync] MIGRATING ${coll} TO CLOUD...`);
+                                    console.warn(`[Sync] MIGRATING ${coll} TO CLOUD... (This might take a moment)`);
                                     const pushRes = await fetch(`${API_URL}/api/data/${coll}`, {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
@@ -281,7 +281,7 @@ export function useProductStore() {
                     } catch (fetchError: any) {
                         clearTimeout(timeoutId);
                         if (fetchError.name === 'AbortError') {
-                            console.error(`[Sync] TIMEOUT: Server is taking too long to respond. It might be waking up.`);
+                            console.error(`[Sync] SERVER ASLEEP: Taking >60s to wake up. Please refresh again in a minute.`);
                         } else {
                             console.error(`[Sync] CONNECTION ERROR for ${coll}:`, fetchError.message);
                         }
