@@ -236,45 +236,62 @@ export function useProductStore() {
     useEffect(() => {
         const loadAllData = async () => {
             console.log(`[Sync] Connecting to: ${API_URL}`);
-            try {
-                const collections = ['products', 'settings', 'suppliers', 'sourcingCart']
+            const collections = ['products', 'settings', 'suppliers', 'sourcingCart']
 
+            try {
                 for (const coll of collections) {
                     console.log(`[Sync] Checking ${coll}...`);
-                    const res = await fetch(`${API_URL}/api/data/${coll}`)
-                    const serverData = await res.json()
 
-                    if (serverData && (Array.isArray(serverData) ? serverData.length > 0 : Object.keys(serverData).length > 0)) {
-                        console.log(`[Sync] Found data on server for ${coll}.`);
-                        if (coll === 'products') setProducts(serverData)
-                        if (coll === 'settings') setSettings(serverData)
-                        if (coll === 'suppliers') setSuppliers(serverData)
-                        if (coll === 'sourcingCart') setSourcingCart(serverData)
-                    } else {
-                        console.log(`[Sync] Server ${coll} is empty. Checking local storage...`);
-                        const localSaved = localStorage.getItem(coll)
-                        if (localSaved) {
-                            const localData = JSON.parse(localSaved)
-                            if (localData && (Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0)) {
-                                console.warn(`[Sync] MIGRATING ${coll} TO CLOUD...`);
-                                const pushRes = await fetch(`${API_URL}/api/data/${coll}`, {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify(localData)
-                                })
-                                if (pushRes.ok) {
-                                    console.log(`[Sync] SUCCESS: ${coll} migrated to cloud.`);
-                                } else {
-                                    console.error(`[Sync] FAILED to migrate ${coll}. Status: ${pushRes.status}`);
+                    // Add a timeout to the fetch call
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+                    try {
+                        const res = await fetch(`${API_URL}/api/data/${coll}`, { signal: controller.signal });
+                        clearTimeout(timeoutId);
+
+                        const serverData = await res.json();
+
+                        if (serverData && (Array.isArray(serverData) ? serverData.length > 0 : Object.keys(serverData).length > 0)) {
+                            console.log(`[Sync] Found data on server for ${coll}.`);
+                            if (coll === 'products') setProducts(serverData)
+                            if (coll === 'settings') setSettings(serverData)
+                            if (coll === 'suppliers') setSuppliers(serverData)
+                            if (coll === 'sourcingCart') setSourcingCart(serverData)
+                        } else {
+                            console.log(`[Sync] Server ${coll} is empty. Checking local storage...`);
+                            const localSaved = localStorage.getItem(coll)
+                            if (localSaved) {
+                                const localData = JSON.parse(localSaved)
+                                if (localData && (Array.isArray(localData) ? localData.length > 0 : Object.keys(localData).length > 0)) {
+                                    console.warn(`[Sync] MIGRATING ${coll} TO CLOUD...`);
+                                    const pushRes = await fetch(`${API_URL}/api/data/${coll}`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify(localData)
+                                    })
+                                    if (pushRes.ok) {
+                                        console.log(`[Sync] SUCCESS: ${coll} migrated to cloud.`);
+                                    } else {
+                                        console.error(`[Sync] FAILED to migrate ${coll}. Status: ${pushRes.status}`);
+                                    }
                                 }
                             }
                         }
+                    } catch (fetchError: any) {
+                        clearTimeout(timeoutId);
+                        if (fetchError.name === 'AbortError') {
+                            console.error(`[Sync] TIMEOUT: Server is taking too long to respond. It might be waking up.`);
+                        } else {
+                            console.error(`[Sync] CONNECTION ERROR for ${coll}:`, fetchError.message);
+                        }
+                        // Continue to next collection or fail gracefully
                     }
                 }
                 setIsLoaded(true)
-                console.log(`[Sync] Full synchronization complete.`);
+                console.log(`[Sync] Full synchronization attempt complete.`);
             } catch (error) {
-                console.error("[Sync] ERROR during initial load:", error)
+                console.error("[Sync] UNEXPECTED SYSTEM ERROR:", error)
                 setIsLoaded(true)
             }
         }
