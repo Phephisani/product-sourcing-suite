@@ -9,7 +9,6 @@ import {
     ExternalLink,
     LayoutGrid,
     List,
-    Info,
     RefreshCw,
     Brain,
     Lock,

@@ -1,6 +1,6 @@
 import { SourcingItem } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import { Scale, Info, TrendingUp, AlertCircle, Calculator } from "lucide-react";
+import { Scale, TrendingUp, AlertCircle, Calculator } from "lucide-react";
 import { useState } from "react";
 
 interface SourcingComparisonProps {
