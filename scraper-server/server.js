@@ -16,6 +16,12 @@ import path from 'path';
 import { scrapeTakealot } from './engines/takealot.js';
 import { scrapeAmazon } from './engines/amazon.js';
 
+// Ensure data directory exists for centralized storage
+const DATA_DIR = path.join(process.cwd(), 'data');
+if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR);
+}
+
 // Ensure history directory exists
 const HISTORY_DIR = path.join(process.cwd(), 'history');
 if (!fs.existsSync(HISTORY_DIR)) {
@@ -44,6 +50,38 @@ app.get('/history/:id', (req, res) => {
     } catch (error) {
         console.error('Error reading history:', error);
         res.status(500).json({ error: 'Failed to read history' });
+    }
+});
+
+// DATA PERSISTENCE ENDPOINTS
+app.get('/api/data/:collection', (req, res) => {
+    try {
+        const { collection } = req.params;
+        const filePath = path.join(DATA_DIR, `${collection}.json`);
+
+        if (!fs.existsSync(filePath)) {
+            return res.json([]); // Return empty array if collection doesn't exist
+        }
+
+        const data = fs.readFileSync(filePath, 'utf8');
+        res.json(JSON.parse(data));
+    } catch (error) {
+        console.error(`Error reading collection ${req.params.collection}:`, error);
+        res.status(500).json({ error: 'Failed to read data' });
+    }
+});
+
+app.post('/api/data/:collection', (req, res) => {
+    try {
+        const { collection } = req.params;
+        const data = req.body;
+        const filePath = path.join(DATA_DIR, `${collection}.json`);
+
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+        res.json({ success: true, collection });
+    } catch (error) {
+        console.error(`Error saving collection ${req.params.collection}:`, error);
+        res.status(500).json({ error: 'Failed to save data' });
     }
 });
 
