@@ -4,19 +4,21 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: "cd scraper-server && npm install"
-    startCommand: "cd scraper-server && node server.js"
+    rootDir: scraper-server
+    buildCommand: "npm install"
+    startCommand: "node server.js"
     envVars:
       - key: PUPPETEER_CACHE_DIR
-        value: "/opt/render/project/src/scraper-server/.cache"
+        value: "/opt/render/project/src/.cache"
       - key: NODE_VERSION
         value: "18"
 
   - type: web
     name: market-dashboard
     runtime: static
-    buildCommand: "cd market-dashboard && npm install && npm run build"
-    staticPublishPath: "market-dashboard/dist"
+    rootDir: market-dashboard
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "dist"
     envVars:
       - key: VITE_API_URL
         value: "https://phepis-scraper.onrender.com"
